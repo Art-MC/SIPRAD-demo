@@ -231,3 +231,18 @@ def get_all_accs(guess_phi, best_phi=None, true_phi=None, pdict=None, guess_amp=
             pdict['best_amp_SS_norm'] = get_SS(best_amp, true_amp, scale_invar=True)
             pdict['best_amp_acc'] = get_acc(best_amp, true_amp)
     return
+
+
+
+def Tukey2D(shape, alpha=0.5, sym=True):
+    """
+    makes a 2D (rectangular not round) window based on a Tukey signal
+    Useful for windowing images before taking FFTs
+    """
+    dimy, dimx = shape
+    ty = tukey(dimy, alpha=alpha, sym=sym)
+    filt_y = np.tile(ty.reshape(dimy, 1), (1, dimx))
+    tx = tukey(dimx, alpha=alpha, sym=sym)
+    filt_x = np.tile(tx, (dimy, 1))
+    output = filt_x * filt_y
+    return output
