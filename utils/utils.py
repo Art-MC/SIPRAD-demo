@@ -191,11 +191,6 @@ def get_all_accs(guess_phi, best_phi=None, true_phi=None, pdict=None, guess_amp=
     pdict['guess_Bmag_SS'] = get_SS(guess_Bmag, true_Bmag)
     pdict['guess_Bmag_SS_norm'] = get_SS(guess_Bmag, true_Bmag, scale_invar=True)
     pdict['guess_Bmag_acc'] = get_acc(guess_Bmag, true_Bmag)
-    pdict['guess_phi_FRC_res'] = get_FRC_res(guess_phi, true_phi, pdict['del_px'], cutoff=0.5)[2]
-    pdict['guess_Bx_FRC_res'] = get_FRC_res(guess_Bx, true_Bx, pdict['del_px'], cutoff=0.5)[2]
-    pdict['guess_By_FRC_res'] = get_FRC_res(guess_By, true_By, pdict['del_px'], cutoff=0.5)[2]
-    pdict['guess_Bave_FRC_res'] = (pdict['guess_Bx_FRC_res'] + pdict['guess_By_FRC_res']) / 2
-    pdict['guess_Bmag_FRC_res'] = get_FRC_res(guess_Bmag, true_Bmag, pdict['del_px'], cutoff=0.5)[2]
 
 
     if best_phi is not None:
@@ -213,10 +208,6 @@ def get_all_accs(guess_phi, best_phi=None, true_phi=None, pdict=None, guess_amp=
         pdict['best_Bmag_SS'] = get_SS(best_Bmag, true_Bmag)
         pdict['best_Bmag_SS_norm'] = get_SS(best_Bmag, true_Bmag, scale_invar=True)
         pdict['best_Bmag_acc'] = get_acc(best_Bmag, true_Bmag)
-        pdict['best_phi_FRC_res'] = get_FRC_res(best_phi, true_phi, pdict['del_px'], cutoff=0.5)[2]
-        pdict['best_Bx_FRC_res'] = get_FRC_res(best_Bx, true_Bx, pdict['del_px'], cutoff=0.5)[2]
-        pdict['best_By_FRC_res'] = get_FRC_res(best_By, true_By, pdict['del_px'], cutoff=0.5)[2]
-        pdict['best_Bmag_FRC_res'] = get_FRC_res(best_Bmag, true_Bmag, pdict['del_px'], cutoff=0.5)[2]
 
         pdict['best_Bave_SS'] = (pdict["best_Bx_SS"] + pdict["best_By_SS"]) / 2
         pdict['best_Bave_SS_norm'] = (pdict["best_Bx_SS_norm"] + pdict["best_By_SS_norm"]) / 2
