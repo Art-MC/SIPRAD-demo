@@ -5,7 +5,7 @@ data consisting of 2D images of the vector field. The output image
 will be stored as a tiff color image. There are options to save it
 using a custom RGB or standard HSV color-wheel.
 
-Author: Arthur McCray, C. Phatak, ANL, Summer 2019.
+Author: Arthur McCray, ANL, 2021.
 """
 
 import matplotlib as mpl

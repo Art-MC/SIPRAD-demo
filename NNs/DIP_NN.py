@@ -9,10 +9,6 @@ class DIP_NN(nn.Module):
     Autencoder for reconstructing object wave and amplitude of LTEM image(s).
 
     Args:
-        learn_amp: bool
-            whether or not to learn the amplitude of the object wave. If true will train
-            on and learn how to predict amplitude, returning a proper [phase, amp] vs
-            returning [phase, torch.ones_like(phase)]
         num_images: int
             number of input channels, equal to # of images in tfs
         nb_filters: int
@@ -37,13 +33,6 @@ class DIP_NN(nn.Module):
         batch_norm=False,
         upsampling_mode="nearest",
     ):
-        # TODO
-        # want the phase and amplitude uppaths to be independent of each other
-        # could conceivably also try running the down paths independently too, but that's not how ptychoNN worked
-        # take number_levels as an argument, but starting with 4 down and up
-        # questions - why the activation function differences between phase (tanh, multiplied by pi) and amp (sigmoi) in ptychoNN?
-        # reorganize this make it more readable
-
         super().__init__()
         self.num_images = num_images
         self.nb_filters = nb_filters

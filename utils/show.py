@@ -2,7 +2,7 @@
 Utility functions for displaying image data
 
 Arthur McCray
-amccray@anl.gov
+armccray@lbl.gov
 """
 
 from textwrap import dedent
@@ -10,7 +10,6 @@ from textwrap import dedent
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-import skimage
 from ipywidgets import interact
 from scipy import ndimage as ndi
 
@@ -162,57 +161,6 @@ def show_im(
             plt.savefig(save, dpi=dpi, bbox_inches="tight")
 
     plt.show()
-    return
-
-
-def show_stack(
-    images,
-    titles=None,
-    scale_each=True,
-    titletext="",
-    origin="upper",
-):
-    """
-    Uses ipywidgets.interact to allow user to view multiple images on the same
-    axis using a slider. There is likely a better way to do this, but this was
-    the first one I found that works...
-
-    Args:
-        images (list): List of 2D arrays. Stack of images to be shown.
-        origin (str): (`optional`) Control image orientation.
-        title (bool): (`optional`) Try and pull a title from the signal objects.
-    Returns:
-        None
-    """
-    _fig, _ax = plt.subplots()
-    images = np.array(images)
-    if not scale_each:
-        vmin = np.min(images)
-        vmax = np.max(images)
-
-    N = images.shape[0]
-    if titles is not None:
-        assert len(titles) == len(images)
-
-    def view_image(i=0):
-        if scale_each:
-            _im = plt.imshow(
-                images[i], cmap="gray", interpolation="nearest", origin=origin
-            )
-        else:
-            _im = plt.imshow(
-                images[i],
-                cmap="gray",
-                interpolation="nearest",
-                origin=origin,
-                vmin=vmin,
-                vmax=vmax,
-            )
-
-        if titles is not None:
-            plt.title(f"{titletext} {titles[i]}")
-
-    interact(view_image, i=(0, N - 1))
     return
 
 
@@ -387,86 +335,3 @@ def show_2D(
             plt.savefig(save, dpi=dpi, bbox_inches="tight", transparent=tr)
 
     return
-
-def show_fft(fft, title=None, **kwargs):
-    """Display the log of the abs of a FFT
-
-    Args:
-        fft (ndarray): 2D image
-        title (str, optional): title of image. Defaults to None.
-        **kwargs: passed to show_im()
-    """
-    fft = np.copy(fft)
-    nonzeros = np.nonzero(fft)
-    fft[nonzeros] = np.log10(np.abs(fft[nonzeros]))
-    fft = fft.real
-    show_im(fft, title=title, **kwargs)
-
-
-def show_log(im, title=None, **kwargs):
-    """Display the log of an image
-
-    Args:
-        im (ndarray): 2D image
-        title (str, optional): title of image. Defaults to None.
-        **kwargs: passed to show_im()
-    """
-    im = np.copy(im)
-    nonzeros = np.nonzero(im)
-    im[nonzeros] = np.log(np.abs(im[nonzeros]))
-    show_im(im, title=title, **kwargs)
-
-
-def show_im_peaks(im=None, peaks=None, peaks2=None, size=None, title=None, **kwargs):
-    """
-    peaks an array [[y1,x1], [y2,x2], ...]
-    """
-    _fig, ax = plt.subplots()
-    if im is not None:
-        ax.matshow(im, cmap="gray", **kwargs)
-    if peaks is not None:
-        peaks = np.array(peaks)
-        ax.plot(
-            peaks[:, 1],
-            peaks[:, 0],
-            c="r",
-            alpha=0.9,
-            ms=size,
-            marker="o",
-            fillstyle="none",
-            linestyle="none",
-        )
-    if peaks2 is not None and np.size(peaks2) != 0:
-        peaks2 = np.array(peaks2)
-        ax.plot(
-            peaks2[:, 1],
-            peaks2[:, 0],
-            c="b",
-            alpha=0.9,
-            ms=size,
-            marker="o",
-            fillstyle="none",
-            linestyle="none",
-        )
-    ax.set_aspect(1)
-    if title is not None:
-        ax.set_title(str(title), pad=0)
-    plt.show()
-
-
-def get_histo(im, minn=None, maxx=None, numbins=None):
-    """
-    gets a histogram of a list of datapoints (im), specify minimum value, maximum value,
-    and number of bins
-    """
-    im = np.array(im)
-    if minn is None:
-        minn = np.min(im)
-    if maxx is None:
-        maxx = np.max(im)
-    if numbins is None:
-        numbins = min(np.size(im) // 20, 100)
-        print(f"{numbins} bins")
-    _fig, ax = plt.subplots()
-    ax.hist(im, bins=np.linspace(minn, maxx, numbins))
-    plt.show()
