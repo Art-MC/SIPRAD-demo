@@ -456,7 +456,12 @@ def calc_TV_loss_PBC(guess_amp, inp_phase, weights, solve_amp):
     """
     Modified to include PBCs in the TV loss
     """
-    if inp_phase.ndim == 2:
+    if inp_phase.ndim in [2,3]:
+        if inp_phase.ndim == 3:
+            if inp_phase.shape[0] == 1:
+                inp_phase = inp_phase.squeeze()
+            else:
+                raise NotImplementedError
         (dy, dx) = inp_phase.size()
         tv_phase = None
         if weights[0] != 0:  # calc phase TV
