@@ -3,9 +3,9 @@ import datetime
 import numpy as np
 import torch
 import torch.nn.functional as F
-from SIMPLE.utils.show import show_im
+from SIPRAD_demo.utils.show import show_im
 import torchvision.transforms as T
-from SIMPLE.utils.utils import Tukey2D
+from SIPRAD_demo.utils.utils import Tukey2D
 
 
 def training_loop(

@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import numpy as np
 
 
-class SIMPLE_NN(nn.Module):
+class SIPRAD_NN(nn.Module):
     """
     Autencoder for reconstructing object wave and amplitude of LTEM image(s).
 
@@ -50,7 +50,7 @@ class SIMPLE_NN(nn.Module):
         # reorganize this make it more readable
 
         super().__init__()
-        print("learn amp in SIMPLE NN", learn_amp)
+        print("learn amp in SIPRAD NN", learn_amp)
         self.learn_amp = learn_amp
         self.num_images = num_images
         self.defvals = defvals

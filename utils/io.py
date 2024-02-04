@@ -7,7 +7,7 @@ import tifffile
 import torch
 from tifffile import TiffFile
 import scipy
-from SIMPLE.utils.show import show_im
+from SIPRAD_demo.utils.show import show_im
 
 
 def read_tif(f):

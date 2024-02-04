@@ -12,7 +12,7 @@ import scipy
 from scipy.spatial.transform import Rotation as R
 
 
-from SIMPLE.utils.show import show_im
+from SIPRAD_demo.utils.show import show_im
 import json
 from copy import deepcopy
 
